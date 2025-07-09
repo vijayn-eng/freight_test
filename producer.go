@@ -101,6 +101,8 @@ func producerWorker(
 		"queue.buffering.max.messages": 100000, // Max messages in producer queue
 		"queue.buffering.max.kbytes":   1024 * 1024, // 1 GB max buffer size
 		"message.timeout.ms":           300000, // 5 minutes message timeout (time to deliver message)
+		"enable.idempotence": "false",
+		"max.in.flight.requests.per.connection": 5
 	})
 	if err != nil {
 		log.Printf("Thread %d: Failed to create producer: %v\n", threadID, err)
