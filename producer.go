@@ -94,7 +94,7 @@ func producerWorker(
 		"sasl.username":     apiKey,
 		"sasl.password":     apiSecret,
 		"client.id":         fmt.Sprintf("go-producer-thread-%d", threadID), // Unique client ID per producer
-		"acks":              "all", // Ensure all replicas acknowledge the message (strong durability)
+		"acks":              "1", // Ensure all replicas acknowledge the message (strong durability)
 		"linger.ms":         100,    // Batch messages for better throughput (10ms wait for more messages)
 		"batch.size":        10 * 1024 * 1024, // 5 MB batch size (adjust based on message size and network)
 		//"compression.type":  "lz4", // LZ4 compression (good balance of speed and ratio)
@@ -102,7 +102,7 @@ func producerWorker(
 		"queue.buffering.max.kbytes":   1024 * 1024, // 1 GB max buffer size
 		"message.timeout.ms":           300000, // 5 minutes message timeout (time to deliver message)
 		"enable.idempotence": "false",
-		"max.in.flight.requests.per.connection": 5,
+		"max.in.flight.requests.per.connection": 10,
 	})
 	if err != nil {
 		log.Printf("Thread %d: Failed to create producer: %v\n", threadID, err)
